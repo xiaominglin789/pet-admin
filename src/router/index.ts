@@ -3,6 +3,10 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 /** 基本路由 */
 const staticRoutes: Array<RouteRecordRaw> = [
 	{
+		path: "/",
+		redirect: "/login",
+	},
+	{
 		path: "/login",
 		name: "login",
 		component: () => import("@/views/user/login.vue"),
@@ -17,6 +21,11 @@ const staticRoutes: Array<RouteRecordRaw> = [
 		meta: {
 			title: "找不到页面"
 		}
+	},
+	{
+		path: "/home",
+		name: "home",
+		component: () => import("@/views/home/index.vue")
 	}
 ];
 

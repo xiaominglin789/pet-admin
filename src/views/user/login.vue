@@ -3,7 +3,7 @@
 		<div class="forms-container">
 			<div class="signin-signup">
 				<!-- signin-form -->
-				<form class="sign-in-form">
+				<form @click.prevent="onSubmitThrottle" class="sign-in-form">
 					<h2 class="title">登录平台</h2>
 					<!-- username -->
 					<div class="input-field">
@@ -36,7 +36,7 @@
 				</form>
 
 				<!-- signup-form -->
-				<form class="sign-up-form">
+				<form @click.prevent="onSubmitThrottle" class="sign-up-form">
 					<h2 class="title">马上注册</h2>
 					<!-- username -->
 					<div class="input-field">
@@ -66,7 +66,7 @@
 				<div class="content">
 					<h3>CSS Transform</h3>
 					<p>Transform字面上就是变形，改变的意思。在CSS3中transform主要包括以下几种：旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix。下面我们一起来看看CSS3中transform的旋转rotate、扭曲skew、缩放scale和移动translate具体如何实现，老样子，我们就从transform的语法开始吧。</p>
-					<button @click="onSigninOrSignup(false)" class="btn convert">Sign up</button>
+					<button @click="onSigninOrSignupDebounce(false)" class="btn convert">Sign up</button>
 				</div>
 				<!-- img -->
 				<img src="@/assets/img/signup.svg" class="image" />
@@ -76,7 +76,7 @@
 				<div class="content">
 					<h3>::before ? ::after</h3>
 					<p>CSS样式表的主要作用是修饰Web页面上的HTML标记，但有时候，为了实现某个效果而往页面里反复添加某个HTML标记很繁琐，或者是显得多余，或者是由于某种原因而做不到。这就是CSS伪元素(Pseudo-Element)可以发挥作用的地方，所谓‘伪元素’，就是本身不存在的页面元素，HTML代码里并没有这样的元素，但在页面显示时，你却能看到这些本来不存在的元素发挥着作用。</p>
-					<button @click="onSigninOrSignup(true)" class="btn convert">Sign in</button>
+					<button @click="onSigninOrSignupDebounce(true)" class="btn convert">Sign in</button>
 				</div>
 				<!-- img -->
 				<img src="@/assets/img/signin.svg" class="image" />
@@ -87,28 +87,44 @@
 
 <script setup lang="ts">
 import { nextTick, ref, onMounted } from "vue";
+import { debounce, throttle } from "../../utils/util";
 
 const loginRef = ref<Element>();
 const loginRefChangeClass = "signup-up-mode";
 
+
 onMounted(() => {
-	onSigninOrSignup(true);
+  nextTick(() => {
+    // 登录
+    onSigninOrSignupDebounce(true);
+  });
 }); 
 
-/** 状态修改 */
+/** 切换登录或注册 */
 const onSigninOrSignup = (flag: boolean) => {
-	nextTick(() => {
-		if (flag) {
-			// true
-			console.log("去登录");
-			loginRef.value?.classList.remove(loginRefChangeClass);
-		} else {
-			// false
-			console.log("去注册");
-			loginRef.value?.classList.add(loginRefChangeClass);
-		}
-	});
+  console.log("flag: ", flag);
+  if (flag) {
+    // true
+    console.log("去登录 ", loginRef.value?.classList);
+    loginRef.value?.classList.remove(loginRefChangeClass);
+    console.log("去登录 ", loginRef.value?.classList);
+  } else {
+    // false
+    console.log("去注册 ", loginRef.value?.classList);
+    loginRef.value?.classList.add(loginRefChangeClass);
+    console.log("去注册 ", loginRef.value?.classList);
+  }
 };
+
+/** 切换登录或注册-防抖 */
+const onSigninOrSignupDebounce = debounce(onSigninOrSignup, 600, true);
+
+const onSubmit = () => {
+  console.log("提交提交...");
+}
+
+const onSubmitThrottle = debounce(onSubmit, 600, false);
+
 </script>
 
 <style lang="css" scoped>
