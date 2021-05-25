@@ -4,12 +4,12 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 const staticRoutes: Array<RouteRecordRaw> = [
 	{
 		path: "/",
-		redirect: "/login",
+		redirect: "/home",
 	},
 	{
 		path: "/login",
 		name: "login",
-		component: () => import("@/views/user/login.vue"),
+		component: () => import("@views/user/login.vue"),
 		meta: {
 			title: "登录"
 		}
@@ -17,7 +17,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
 	{
 		path: "/404",
 		name: "nofound",
-		component: () => import("@/views/empty/404.vue"),
+		component: () => import("@views/empty/404.vue"),
 		meta: {
 			title: "找不到页面"
 		}
@@ -25,7 +25,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
 	{
 		path: "/home",
 		name: "home",
-		component: () => import("@/views/home/index.vue")
+		component: () => import("@views/home/index.vue")
 	}
 ];
 

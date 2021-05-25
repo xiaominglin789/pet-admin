@@ -3,7 +3,7 @@
 		<div class="forms-container">
 			<div class="signin-signup">
 				<!-- signin-form -->
-				<form @click.prevent="onSubmitThrottle" class="sign-in-form">
+				<form class="sign-in-form">
 					<h2 class="title">登录平台</h2>
 					<!-- username -->
 					<div class="input-field">
@@ -16,7 +16,7 @@
 						<input type="password" placeholder="密码" />
 					</div>
 					<!-- submit -->
-					<input type="submit" value="登录" class="btn solid" />
+					<input @click.prevent="onSubmitThrottle" type="submit" value="登录" class="btn solid" />
 					<p class="thirds-login-text">其他第三方登录</p>
 					<!-- thirds -->
 					<div class="thirds">
@@ -36,7 +36,7 @@
 				</form>
 
 				<!-- signup-form -->
-				<form @click.prevent="onSubmitThrottle" class="sign-up-form">
+				<form class="sign-up-form">
 					<h2 class="title">马上注册</h2>
 					<!-- username -->
 					<div class="input-field">
@@ -54,11 +54,11 @@
 						<input type="password" placeholder="密码" />
 					</div>
 					<!-- submit -->
-					<input type="submit" value="注册" class="btn solid" />
+					<input @click.prevent="onSubmitThrottle" type="submit" value="注册" class="btn solid" />
 				</form>
 			</div>
 		</div>
-
+    
 		<!-- 切换栏 -->
 		<div class="panels-container">
 			<!-- 左侧提示 -->
@@ -66,7 +66,7 @@
 				<div class="content">
 					<h3>CSS Transform</h3>
 					<p>Transform字面上就是变形，改变的意思。在CSS3中transform主要包括以下几种：旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix。下面我们一起来看看CSS3中transform的旋转rotate、扭曲skew、缩放scale和移动translate具体如何实现，老样子，我们就从transform的语法开始吧。</p>
-					<button @click="onSigninOrSignupDebounce(false)" class="btn convert">Sign up</button>
+					<button @click="toSignUp" class="btn convert">去注册</button>
 				</div>
 				<!-- img -->
 				<img src="@/assets/img/signup.svg" class="image" />
@@ -76,7 +76,7 @@
 				<div class="content">
 					<h3>::before ? ::after</h3>
 					<p>CSS样式表的主要作用是修饰Web页面上的HTML标记，但有时候，为了实现某个效果而往页面里反复添加某个HTML标记很繁琐，或者是显得多余，或者是由于某种原因而做不到。这就是CSS伪元素(Pseudo-Element)可以发挥作用的地方，所谓‘伪元素’，就是本身不存在的页面元素，HTML代码里并没有这样的元素，但在页面显示时，你却能看到这些本来不存在的元素发挥着作用。</p>
-					<button @click="onSigninOrSignupDebounce(true)" class="btn convert">Sign in</button>
+					<button @click="toSignIn" class="btn convert">去登录</button>
 				</div>
 				<!-- img -->
 				<img src="@/assets/img/signin.svg" class="image" />
@@ -86,22 +86,20 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref, onMounted } from "vue";
-import { debounce, throttle } from "../../utils/util";
+import { nextTick, onMounted, ref } from "vue";
+import { debounce } from "../../utils/util";
 
-const loginRef = ref<Element>();
 const loginRefChangeClass = "signup-up-mode";
-
+const loginRef = ref<Element|undefined>();
 
 onMounted(() => {
   nextTick(() => {
-    // 登录
+    // 进入页面显示登录的
     onSigninOrSignupDebounce(true);
   });
-}); 
+});
 
-/** 切换登录或注册 */
-const onSigninOrSignup = (flag: boolean) => {
+const onSigninOrSignupDebounce = debounce((flag: boolean) => {
   console.log("flag: ", flag);
   if (flag) {
     // true
@@ -114,16 +112,20 @@ const onSigninOrSignup = (flag: boolean) => {
     loginRef.value?.classList.add(loginRefChangeClass);
     console.log("去注册 ", loginRef.value?.classList);
   }
-};
+}, 600, true)
 
-/** 切换登录或注册-防抖 */
-const onSigninOrSignupDebounce = debounce(onSigninOrSignup, 600, true);
 
-const onSubmit = () => {
-  console.log("提交提交...");
+const toSignUp = () => {
+  onSigninOrSignupDebounce(false);
 }
 
-const onSubmitThrottle = debounce(onSubmit, 600, false);
+const toSignIn = () => {
+  onSigninOrSignupDebounce(true);
+}
+
+const onSubmitThrottle = debounce(() => {
+  console.log("提交...");
+});
 
 </script>
 
