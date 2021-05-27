@@ -1,7 +1,6 @@
 <template>
   <el-container class="page home">
     <el-header class="home-header" >
-      <gg :ggType="ggType"></gg>
       <!-- 语言切换 -->
       <el-dropdown trigger="click" @command="onDropdownChange">
         <span class="el-dropdown-link">
@@ -23,15 +22,9 @@
 import { useVueI18n } from "../../hooks/useVueI18n";
 import { ElMessageBox, ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
-import gg from "../../components/gg.vue";
-import type { GGType } from "../../utils/interface-type";
 
 const  { langData, change, t } = useVueI18n();
 const router = useRouter();
-
-const ggType: GGType = {
-  count: 789
-}
 
 const onDropdownChange = (target:string) => {
   change(target);

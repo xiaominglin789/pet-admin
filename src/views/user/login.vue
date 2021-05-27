@@ -107,7 +107,7 @@ const onSubmitSignupThrottle = debounce((params: any) => {
 .signin-signup .btn-form {
 }
 
-.signin-signup .btn-form >>> .el-button {
+.signin-signup:deep(.btn-form .el-button) {
   width: 210px;
 }
 
@@ -123,18 +123,19 @@ const onSubmitSignupThrottle = debounce((params: any) => {
   transition: 0.2s 0.7s ease-in-out;
 }
 
-.form .title >>> .el-form-item__label {
+
+.form:deep(.title .el-form-item__label) {
   color: #333;
-  margin-bottom: 0 !important;
-  font-size: 27px !important;
-  margin-bottom: 0 !important;
-  width: 210px !important;
+  margin-bottom: 0;
+  font-size: 27px;
+  margin-bottom: 0;
+  width: 210px;
   text-align: right;
   text-decoration: underline;
 }
 
 
-.form.form-signup .title >>> .el-form-item__label {
+.form.form-signup:deep(.title .el-form-item__label) {
   color: #333;
   margin-bottom: 0 !important;
   font-size: 27px !important;
@@ -416,7 +417,7 @@ const onSubmitSignupThrottle = debounce((params: any) => {
     transform: translate(-50%, 0);
   }
 
-  .form .title >>> .el-form-item__label {
+  .form:deep(.title .el-form-item__label) {
     margin-bottom: 0 !important;
     font-size: 18px !important;
     width: 100%;
