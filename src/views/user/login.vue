@@ -1,62 +1,10 @@
 <template>
-	<div ref="loginRef" class="page login container">
+	<div class="page login container" :class="{'signup-up-mode': signupUpMode}">
 		<div class="forms-container">
 			<div class="signin-signup">
-				<!-- signin-form -->
-				<form class="sign-in-form">
-					<h2 class="title">登录平台</h2>
-					<!-- username -->
-					<div class="input-field">
-						<i class="iconfont icon-user"></i>
-						<input type="text" placeholder="账号" />
-					</div>
-					<!-- password -->
-					<div class="input-field">
-						<i class="iconfont icon-lock"></i>
-						<input type="password" placeholder="密码" />
-					</div>
-					<!-- submit -->
-					<input @click.prevent="onSubmitThrottle" type="submit" value="登录" class="btn solid" />
-					<p class="thirds-login-text">其他第三方登录</p>
-					<!-- thirds -->
-					<div class="thirds">
-						<a href="#" class="third-icon">
-							<i class="iconfont icon-wechat"></i>
-						</a>
-						<a href="#" class="third-icon">
-							<i class="iconfont icon-qq"></i>
-						</a>
-						<a href="#" class="third-icon">
-							<i class="iconfont icon-zhifubao"></i>
-						</a>
-						<a href="#" class="third-icon">
-							<i class="iconfont icon-xiaomi"></i>
-						</a>
-					</div>
-				</form>
-
-				<!-- signup-form -->
-				<form class="sign-up-form">
-					<h2 class="title">马上注册</h2>
-					<!-- username -->
-					<div class="input-field">
-						<i class="iconfont icon-user"></i>
-						<input type="text" placeholder="账号" />
-					</div>
-					<!-- email -->
-					<div class="input-field">
-						<i class="iconfont icon-email"></i>
-						<input type="text" placeholder="邮箱" />
-					</div>
-					<!-- password -->
-					<div class="input-field">
-						<i class="iconfont icon-lock"></i>
-						<input type="password" placeholder="密码" />
-					</div>
-					<!-- submit -->
-					<input @click.prevent="onSubmitThrottle" type="submit" value="注册" class="btn solid" />
-				</form>
-			</div>
+        <ComSignin class="form form-signin" @onSubmit="onSubmitSigninThrottle"></ComSignin>
+        <ComSignup class="form form-signup" @onSubmit="onSubmitSignupThrottle"></ComSignup>
+      </div>
 		</div>
     
 		<!-- 切换栏 -->
@@ -66,7 +14,7 @@
 				<div class="content">
 					<h3>CSS Transform</h3>
 					<p>Transform字面上就是变形，改变的意思。在CSS3中transform主要包括以下几种：旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix。下面我们一起来看看CSS3中transform的旋转rotate、扭曲skew、缩放scale和移动translate具体如何实现，老样子，我们就从transform的语法开始吧。</p>
-					<button @click="toSignUp" class="btn convert">去注册</button>
+					<button @click="signupUpMode = !signupUpMode" class="btn convert">{{ t('signInAndUp.signUp') }}</button>
 				</div>
 				<!-- img -->
 				<img src="@/assets/img/signup.svg" class="image" />
@@ -76,7 +24,7 @@
 				<div class="content">
 					<h3>::before ? ::after</h3>
 					<p>CSS样式表的主要作用是修饰Web页面上的HTML标记，但有时候，为了实现某个效果而往页面里反复添加某个HTML标记很繁琐，或者是显得多余，或者是由于某种原因而做不到。这就是CSS伪元素(Pseudo-Element)可以发挥作用的地方，所谓‘伪元素’，就是本身不存在的页面元素，HTML代码里并没有这样的元素，但在页面显示时，你却能看到这些本来不存在的元素发挥着作用。</p>
-					<button @click="toSignIn" class="btn convert">去登录</button>
+					<button @click="signupUpMode = !signupUpMode" class="btn convert">{{ t('signInAndUp.signIn') }}</button>
 				</div>
 				<!-- img -->
 				<img src="@/assets/img/signin.svg" class="image" />
@@ -86,50 +34,33 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from "vue";
+import { ref } from "vue";
 import { debounce } from "../../utils/util";
+import { useVueI18n } from "../../hooks/useVueI18n";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+import ComSignin from "../../components/login/ComSignin.vue";
+import ComSignup from "../../components/login/ComSignup.vue";
 
-const loginRefChangeClass = "signup-up-mode";
-const loginRef = ref<Element|undefined>();
+const router = useRouter();
+const { t } = useVueI18n();
+/** 控制去注册或去登录 */
+const signupUpMode = ref(false);
 
-onMounted(() => {
-  nextTick(() => {
-    // 进入页面显示登录的
-    onSigninOrSignupDebounce(true);
-  });
-});
+const onSubmitSigninThrottle = debounce((params: any) => {
+  console.log(params);
+  ElMessage.error(t("signInAndUp.signInError"));
+  router.replace("/");
+}, 500);
 
-const onSigninOrSignupDebounce = debounce((flag: boolean) => {
-  console.log("flag: ", flag);
-  if (flag) {
-    // true
-    console.log("去登录 ", loginRef.value?.classList);
-    loginRef.value?.classList.remove(loginRefChangeClass);
-    console.log("去登录 ", loginRef.value?.classList);
-  } else {
-    // false
-    console.log("去注册 ", loginRef.value?.classList);
-    loginRef.value?.classList.add(loginRefChangeClass);
-    console.log("去注册 ", loginRef.value?.classList);
-  }
-}, 600, true)
-
-
-const toSignUp = () => {
-  onSigninOrSignupDebounce(false);
-}
-
-const toSignIn = () => {
-  onSigninOrSignupDebounce(true);
-}
-
-const onSubmitThrottle = debounce(() => {
-  console.log("提交...");
-});
+const onSubmitSignupThrottle = debounce((params: any) => {
+  console.log(params);
+  ElMessage.error(t("signInAndUp.signUpError"));
+}, 500);
 
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 .container {
   position: relative;
   width: 100%;
@@ -173,7 +104,14 @@ const onSubmitThrottle = debounce(() => {
   transition: 1s 0.7s ease-in-out;
 }
 
-form {
+.signin-signup .btn-form {
+}
+
+.signin-signup .btn-form >>> .el-button {
+  width: 210px;
+}
+
+.form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -185,108 +123,36 @@ form {
   transition: 0.2s 0.7s ease-in-out;
 }
 
-form.sign-in-form {
+.form .title >>> .el-form-item__label {
+  color: #333;
+  margin-bottom: 0 !important;
+  font-size: 27px !important;
+  margin-bottom: 0 !important;
+  width: 210px !important;
+  text-align: right;
+  text-decoration: underline;
+}
+
+
+.form.form-signup .title >>> .el-form-item__label {
+  color: #333;
+  margin-bottom: 0 !important;
+  font-size: 27px !important;
+  margin-bottom: 0 !important;
+  width: 290px !important;
+  text-align: right;
+  text-decoration: underline;
+}
+
+.form.form-signin {
   z-index: 2;
   opacity: 1;
 }
 
-form.sign-up-form {
+.form.form-signup {
   z-index: 1;
   opacity: 0;
   transform: translateX(100%);
-}
-
-.title {
-  font-size: 32px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #888;
-}
-
-.input-field {
-  max-width: 380px;
-  width: 100%;
-  height: 50px;
-  background-color: #f0f0f0;
-  margin: 8px 0;
-  border-radius: 24px;
-  display: grid;
-  grid-template-columns: 15% 85%;
-  padding: 0 16px;
-}
-
-.input-field i {
-  text-align: center;
-  line-height: 50px;
-  color: #acacac;
-  font-size: 16px;
-}
-
-.input-field input {
-  background: none;
-  outline: none;
-  border: none;
-  line-height: 1;
-  font-weight: 600;
-  font-size: 16px;
-  color: #555;
-}
-
-.input-field input::placeholder {
-  color: #aaa;
-  font-weight: 600;
-}
-
-.btn {
-  border: none;
-  outline: none;
-  border-radius: 24px;
-  width: 160px;
-  height: 40px;
-  background-color: #5995fd;
-  cursor: pointer;
-  color: #fff;
-  font-weight: 600;
-  font-size: 18px;
-  margin: 8px 0;
-}
-
-.btn:hover {
-  background-color: #4d84e2;
-}
-
-.third-logins {
-  padding: 4px 0;
-  font-size: 16px;
-}
-
-.thirds-login-text {
-  font-size: 14px;
-  color: #888;
-  padding: 8px 0;
-}
-
-.thirds {
-  display: flex;
-  justify-content: center;
-}
-
-.third-icon {
-  width: 36px;
-  height: 36px;
-  border: 1px solid #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 4px;
-  color: #333;
-  border-radius: 50%;
-  transition: .3s;
-}
-
-.third-icon:hover {
-  color: #4d84e2;
-  border-color: #4d84e2;
 }
 
 .panels-container {
@@ -309,12 +175,12 @@ form.sign-up-form {
 }
 
 .left-panel {
-  padding: 3rem 17% 2rem 12%;
+  padding: 3rem 16% 2rem 12%;
   pointer-events: all;
 }
 
 .right-panel {
-  padding: 3rem 12% 2rem 17%;
+  padding: 3rem 12% 2rem 16%;
   pointer-events: none;
 }
 
@@ -344,8 +210,10 @@ form.sign-up-form {
 
 .panel .btn.convert {
   border: 2px solid #fff;
-  width: 120px;
-  height: 40px;
+  width: 180px;
+  height: 48px;
+  border-radius: 24px;
+  font-size: 22px;
 }
 
 .image {
@@ -385,12 +253,12 @@ form.sign-up-form {
   left: 25%;
 }
 
-.container.signup-up-mode form.sign-in-form {
+.container.signup-up-mode .form.form-signin {
   z-index: 1;
   opacity: 0;
 }
 
-.container.signup-up-mode form.sign-up-form {
+.container.signup-up-mode .form.form-signup {
   z-index: 2;
   opacity: 1;
   transform: translateX(0px);
@@ -418,7 +286,7 @@ form.sign-up-form {
   .signin-signup {
     width: 100%;
     left: 50%;
-    top: 85%;
+    top: 83%;
     transform: translate(-50%, -100%);
   }
 
@@ -448,11 +316,12 @@ form.sign-up-form {
     padding: 4px 0;
   }
 
-  .btn.convert {
+  .panel .btn.convert {
     border: 1px solid #fff;
-    width: 100px;
+    width: 120px;
     height: 36px;
     font-size: 18px;
+    border-radius: 18px;
   }
 
   .left-panel {
@@ -484,14 +353,21 @@ form.sign-up-form {
   }
 
   .container.signup-up-mode .signin-signup {
-    top: 15%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, 0);
   }
 }
 
 @media(max-width: 570px) {
-  form {
+
+  .container.signup-up-mode .signin-signup {
+    top: 10%;
+    left: 45%;
+    transform: translate(-50%, 0);
+  }
+
+  .form {
     padding: 0 10px;
   }
 
@@ -534,8 +410,18 @@ form.sign-up-form {
     height: 100vh;
   }
 
-  .title {
-    font-size: 24px;
+  .container.signup-up-mode .signin-signup {
+    top: 10%;
+    left: 45%;
+    transform: translate(-50%, 0);
+  }
+
+  .form .title >>> .el-form-item__label {
+    margin-bottom: 0 !important;
+    font-size: 18px !important;
+    width: 100%;
+    text-align: right;
+    text-decoration: underline;
   }
 
   .panel {

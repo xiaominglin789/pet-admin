@@ -1,52 +1,75 @@
 <template>
-  <el-container>
-    <el-header >
-      <el-dropdown @command="onDropdownChange">
+  <el-container class="page home">
+    <el-header class="home-header" >
+      <gg :ggType="ggType"></gg>
+      <!-- 语言切换 -->
+      <el-dropdown trigger="click" @command="onDropdownChange">
         <span class="el-dropdown-link">
-          {{t("lauguage.change")}}<i class="el-icon-arrow-down el-icon--right"></i>
+          {{ t("lauguage.change") }}<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <template #dropdown>
-          <el-dropdown-menu>
+          <el-dropdown-menu class="header-dropdown-menu">
             <el-dropdown-item v-for="lang in langData" :key="lang.title" :command="lang.value">{{ lang.title }}</el-dropdown-item>
-            <el-dropdown-item disabled>{{ t("lauguage.loginOut") }}</el-dropdown-item>
+            <el-button class="btn-sign-out" @click.prevent="onSignOut">{{ t("lauguage.loginOut") }}</el-button>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </el-header>
-    <el-container>
-      <el-aside width="200px">Aside</el-aside>
-      <el-main>
-        <el-tag>标签一</el-tag>
-        <el-tag type="success">标签二</el-tag>
-        <el-tag type="info">标签三</el-tag>
-        <el-tag type="warning">标签四</el-tag>
-        <el-tag type="danger">标签五</el-tag>
-      </el-main>
-    </el-container>
+    
   </el-container>
 </template>
 
 <script setup lang="ts">
 import { useVueI18n } from "../../hooks/useVueI18n";
+import { ElMessageBox, ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+import gg from "../../components/gg.vue";
+import type { GGType } from "../../utils/interface-type";
 
 const  { langData, change, t } = useVueI18n();
+const router = useRouter();
+
+const ggType: GGType = {
+  count: 789
+}
 
 const onDropdownChange = (target:string) => {
   change(target);
 }
+
+const onSignOut = () => {
+  ElMessageBox.confirm(t("lauguage.isLoginOut"), "", {
+    center: true
+  }).then(res=> {
+    router.replace('/login');
+    ElMessage.success(t("lauguage.loginOutSeccuss"));
+  }).catch(err => {
+    console.log(err);
+  });
+}
 </script>
 
-<style scoped>
-.el-header {
+<style lang="scss" scoped>
+.el-header.home-header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  box-shadow: 0 1px 2px 1px #eee;
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
 }
-.el-dropdown-link {
-  cursor: pointer;
-  color: #409EFF;
+.header-dropdown-menu {
+  text-align: center;
+  .btn-sign-out {
+    outline: none !important;
+    border: none !important;
+    width: 100% !important;
+  }
 }
-.el-icon-arrow-down {
-  font-size: 12px;
-}
+
 </style>

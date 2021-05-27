@@ -10,6 +10,9 @@ import {
   ElDropdownMenu,
   ElDropdownItem,
   ElDropdown,
+  ElForm,
+  ElFormItem,
+  ElInput
 } from "element-plus";
 
 const elComponents = [
@@ -22,7 +25,10 @@ const elComponents = [
   ElTag,
   ElDropdownMenu,
   ElDropdownItem,
-  ElDropdown
+  ElDropdown,
+  ElForm,
+  ElFormItem,
+  ElInput
 ]
 
 const useElementComps = (app:any, i18nOptioons?: Record<string, any>) => {

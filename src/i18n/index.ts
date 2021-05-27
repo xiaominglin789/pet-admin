@@ -4,7 +4,7 @@ import enMsg from "./en";
 
 const i18n = createI18n({
   legacy: false,
-  locale: "cn",
+  locale: "en",
   messages: {
     cn: {
       // ...(() => import("./cn/cn"))
@@ -15,5 +15,7 @@ const i18n = createI18n({
     },
   }
 });
+
+// 初始化设置缓存的语言
 
 export default i18n;
