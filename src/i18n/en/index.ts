@@ -17,6 +17,8 @@ export default {
     accountTip: "input account",
     passwordTip: "input password",
     emailTip: "input email",
+    signInSuccess: "login success...",
+    signUpSuccess: "register success...",
     signInError: "sorry login fail...",
     signUpError: "sorry register fail...",
   }

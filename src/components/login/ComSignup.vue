@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { useVueI18n } from "../../hooks/useVueI18n";
 import { defineEmit, ref } from "vue";
-import type { SignupModelType } from "../../utils/interface-type";
+import type { SignupModelType } from "../../utils/types/interface-type";
 
 const emit = defineEmit(['onSubmit']);
 const signupMole = ref<SignupModelType>({
@@ -36,7 +36,3 @@ const signupMole = ref<SignupModelType>({
 const { t } = useVueI18n();
 
 </script>
-
-<style lang="scss" scoped>
-  
-</style>

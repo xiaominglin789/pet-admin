@@ -34,6 +34,13 @@ export default defineConfig({
     }]
   })],
   server: {
-    port: servePort
+    port: servePort,
+    proxy: {
+      "/api": {
+        target: "http://localhost:10086",
+        ws: true,
+        rewrite: (path) => path.replace("/api", "")
+      }
+    }
   }
 })

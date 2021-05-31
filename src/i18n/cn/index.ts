@@ -17,6 +17,8 @@ export default {
     accountTip: "输入账号",
     passwordTip: "输入密码",
     emailTip: "你的邮箱",
+    signInSuccess: "登录成功...",
+    signUpSuccess: "注册成功...",
     signInError: "登录失败",
     signUpError: "注册失败",
   }

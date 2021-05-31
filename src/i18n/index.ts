@@ -4,10 +4,9 @@ import enMsg from "./en";
 
 const i18n = createI18n({
   legacy: false,
-  locale: "en",
+  locale: "cn",
   messages: {
     cn: {
-      // ...(() => import("./cn/cn"))
       ...cnMsg,
     },
     en: {

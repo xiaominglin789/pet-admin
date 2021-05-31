@@ -1,7 +1,4 @@
-/** 对象类型判断 */
-const isObject = (obj: any) => {
-    return typeof obj === "object" && obj != null;
-}
+/** 工具函数 */
 
 /**
    * 节流函数
@@ -9,7 +6,7 @@ const isObject = (obj: any) => {
    * @param delay 延迟时间,默认 300ms
    */
 const throttle = (fn: Function, delay: number=300) => {
-  let timer: number|null = null;
+  let timer: any = null;
   let result: any = null;
 
   return (...args: any) => {
@@ -30,7 +27,7 @@ const throttle = (fn: Function, delay: number=300) => {
    * @param immediatory 是否立刻执行方法,默认 false
    */
 const debounce = (fn: Function, delay: number=300, immediatory: boolean=false) => {
-  let timer: number|null = null;
+  let timer: any = null;
   let result: any = null;
 
   return (...args:any) => {
@@ -56,8 +53,93 @@ const debounce = (fn: Function, delay: number=300, immediatory: boolean=false) =
   }
 }
 
+/**
+ * 判断 是否为对象类型
+ * @param target 
+ * @returns true: 是对象类型,  false: 非对象类型
+ */
+ function isObject(target: any): boolean {
+  return typeof target == "object" && target !== null;
+}
+
+/**
+ * 判断 是不是数组类型
+ * @param target 
+ * @returns true: 数组类型,  false: 非数组类型
+ */
+function isArray(target: any): boolean {
+  return Array.isArray(target);
+}
+
+/**
+ * 判断 是不是函数类型
+ * @param target 
+ * @returns true: 函数类型,  false: 非函数类型
+ */
+function isFunction(target: any): boolean {
+  return typeof target == "function";
+}
+
+/**
+ * 判断 是不是数字类型
+ * @param target 
+ * @returns true: 数字类型,  false: 非数字类型
+ */
+ function isNumber(target: any): boolean {
+  return typeof target == "number";
+}
+
+/**
+ * 判断 是不是字符串类型
+ * @param target 
+ * @returns true: 字符串类型,  false: 非字符串类型
+ */
+ function isString(target: any): boolean {
+  return typeof target == "string";
+}
+
+/**
+ * 判断 是不是整形数字类型
+ * @param target 
+ * @returns true: 整形数字类型,  false: 非 整形数字类型
+ */
+function isInteger(target: any): boolean {
+  return parseInt(target) + "" === target;
+}
+
+/**
+ * target 是否有 key 这个属性
+ * @param target 
+ * @param key key键的属性
+ * @returns 
+ */
+function hasOwnKey(target: any, key: string) {
+  return Object.prototype.hasOwnProperty.call(target, key);
+}
+
+/**
+ * 比较变量是否相等
+ * @param valA 
+ * @param valB 
+ * @returns true: 值一样的， false: 值不一样
+ */
+function  compareValue<T>(valA: T, valB: T) {
+  if (!valA || !valB) {
+    return false;
+  }
+
+  return valB === valA;
+}
+
 export {
   isObject,
   throttle,
-  debounce
+  debounce,
+  isArray,
+  isFunction,
+  isNumber,
+  isString,
+  isInteger,
+  hasOwnKey,
+  compareValue
 };

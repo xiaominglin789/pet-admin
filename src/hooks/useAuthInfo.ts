@@ -1,4 +1,6 @@
 import { reactive } from "@vue/reactivity";
+import { getTest } from "@/api/user";
+import { onMounted } from "@vue/runtime-core";
 
 interface IUserInformation {
     id: number
@@ -9,6 +11,11 @@ interface IUserInformation {
 /** 授权信息 */
 const useAuthInfo = () => {
     const userInformation = reactive({} as IUserInformation);
+
+    onMounted(async() => {
+        console.log("尝试发生请求: ");
+        await getTest();
+    })
 
     /** 是否已登录 */
     const hasAuth = (): boolean => {

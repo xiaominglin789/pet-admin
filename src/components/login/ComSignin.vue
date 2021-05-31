@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { useVueI18n } from "../../hooks/useVueI18n";
 import { defineEmit, ref } from "vue";
-import type { SigninModelType } from "../../utils/interface-type";
+import type { SigninModelType } from "../../utils/types/interface-type";
 
 const signinModel = ref<SigninModelType>({
   account: "",
@@ -30,7 +30,3 @@ const emit = defineEmit(['onSubmit']);
 const { t } = useVueI18n();
 
 </script>
-
-<style lang="scss" scoped>
-  
-</style>

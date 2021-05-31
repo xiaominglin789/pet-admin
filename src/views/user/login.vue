@@ -2,8 +2,8 @@
 	<div class="page login container" :class="{'signup-up-mode': signupUpMode}">
 		<div class="forms-container">
 			<div class="signin-signup">
-        <ComSignin class="form form-signin" @onSubmit="onSubmitSigninThrottle"></ComSignin>
-        <ComSignup class="form form-signup" @onSubmit="onSubmitSignupThrottle"></ComSignup>
+        <com-signin class="form form-signin" @onSubmit="onSubmitSigninThrottle"></com-signin>
+        <com-signup class="form form-signup" @onSubmit="onSubmitSignupThrottle"></com-signup>
       </div>
 		</div>
     
@@ -35,21 +35,23 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { debounce } from "../../utils/util";
-import { useVueI18n } from "../../hooks/useVueI18n";
+import { debounce } from "@/utils/util";
+import { useVueI18n } from "@/hooks/useVueI18n";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
-import ComSignin from "../../components/login/ComSignin.vue";
-import ComSignup from "../../components/login/ComSignup.vue";
+import { useAuthInfo } from "@/hooks/useAuthInfo";
+import ComSignin from "@/components/login/ComSignin.vue";
+import ComSignup from "@/components/login/ComSignup.vue";
 
 const router = useRouter();
 const { t } = useVueI18n();
 /** 控制去注册或去登录 */
 const signupUpMode = ref(false);
+const userAuthInfo = useAuthInfo();
 
 const onSubmitSigninThrottle = debounce((params: any) => {
   console.log(params);
-  ElMessage.error(t("signInAndUp.signInError"));
+  ElMessage.success(t("signInAndUp.signInSuccess"));
   router.replace("/");
 }, 500);
 
