@@ -4,7 +4,7 @@
       <!-- 语言切换 -->
       <com-lauguage-drapdown>
         <template #others>
-          <el-button class="btn-sign-out">{{ t("lauguage.loginOut") }}</el-button>
+          <el-button @click="onSignOut" class="btn-sign-out">{{ t("lauguage.loginOut") }}</el-button>
         </template>
       </com-lauguage-drapdown>
     </el-header>
@@ -16,9 +16,21 @@
 import { useRouter } from "vue-router";
 import ComLauguageDrapdown from "@/components/public/ComLauguageDropdown.vue"
 import { useVueI18n } from "../../hooks/useVueI18n";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const router = useRouter();
 const { t } = useVueI18n();
+
+const onSignOut = () => {
+  ElMessageBox.confirm(t("lauguage.isLoginOut"), "", {
+    center: true
+  }).then(res=> {
+    router.replace('/login');
+    ElMessage.success(t("lauguage.loginOutSeccuss"));
+  }).catch(err => {
+    console.log(err);
+  });
+}
 
 </script>
 

@@ -1,5 +1,5 @@
 import { reactive } from "@vue/reactivity";
-import { getTest } from "@/api/user";
+import { getTest, getTest1, getTest3 } from "@/api/user";
 import { onMounted } from "@vue/runtime-core";
 
 interface IUserInformation {
@@ -14,7 +14,7 @@ const useAuthInfo = () => {
 
     onMounted(async() => {
         console.log("尝试发生请求: ");
-        await getTest();
+        await getTest3();
     })
 
     /** 是否已登录 */

@@ -8,6 +8,10 @@ export enum HttpMethodEnum {
 
 /** body参数格式 */
 export enum HttpContentTypeEnum {
-  JSON = 'application/json',
+  /** json */
+  JSON = 'application/json;charset=utf-8',
+  /** 表单 */
   FORM = 'application/x-www-form-urlencoded',
+  /** 上传 */
+  MULTIPART = 'multipart/form-data'
 }

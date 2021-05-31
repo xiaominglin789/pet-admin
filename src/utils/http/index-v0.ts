@@ -7,16 +7,29 @@
  * delete: body       
  */
 import { HttpMethodEnum, HttpContentTypeEnum } from "@/utils/emuns/http-enum";
+import { isObject } from "../util";
 
 // es7+
 let xhr = new XMLHttpRequest();
 
-const _request = (url: string, data: any, method: HttpMethodEnum) => {
-  console.log("url=", url);
+const _request = (url: string, data: any, method: HttpMethodEnum, dataType?: HttpContentTypeEnum) => {
+  console.log("url=", url, " data=", data);
   return new Promise((resolve, reject) => {
     // 配置
     xhr.open(HttpMethodEnum[method], url, true);
-    // 处理毁掉
+    /** post/put/delete 处理 data 的cont-type方式, get-data=null */
+    // if (data) {
+    //   switch (dataType) {
+    //     case HttpContentTypeEnum.FORM:
+    //       xhr.setRequestHeader("Content-Type", 'application/json');
+    //       break;
+    //     case HttpContentTypeEnum.JSON:
+    //       xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // }
     xhr.onreadystatechange = function() {
       console.log(xhr.readyState);
       if (xhr.readyState === 4) {
@@ -34,46 +47,46 @@ const _request = (url: string, data: any, method: HttpMethodEnum) => {
         }
       }
     }
-    xhr.onerror = function() {
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    }
     // 发起
+    xhr.setRequestHeader("Content-Type", 'application/json;charset=utf-8');
+    
     xhr.send(data);
   })
 }
 
-const _formatUrl = (url: string, data: any, method: HttpMethodEnum) => {
-  if (HttpMethodEnum.GET === HttpMethodEnum[method] && data !== null) {
+/** get-url-params参数拼接 */
+const _formatGetUrl = (url: string, data: any) => {
     // get, params 参数
-    
+  if (isObject(data) && Object.keys(data).length > 0) {
+    // 传入对象类型的参数,装成 ?k1=v1&k2=v2...
+    let temp = "?";
+    for(let [k, v] of Object.entries(data)) {
+      temp += k + "=" + v + "&";
+    }
+    temp = temp.replace(/&?$/, '');
+    url += temp;
   }
-  
   return url;
 }
 
-/** 处理data */
-const _formatData = (data: Record<string, any>, dataType: HttpContentTypeEnum) => {
-  
-}
-
 /** get请求 */
-const get = (url:string, data: any) => {
-  return _request(url, null, HttpMethodEnum.GET);
+const get = (url:string, data: Record<string, any>|undefined) => {
+  return _request(_formatGetUrl(url, data), null, HttpMethodEnum.GET);
 }
 
 /** post请求 */
-const post = (url:string, data: Record<string, any>) => {
-  return _request(url, data, HttpMethodEnum.POST);
+const post = (url:string, data: any, dataType?: HttpContentTypeEnum | undefined) => {
+  return _request(url, data, HttpMethodEnum.POST, dataType);
 }
 
 /** put请求 */
-const put = (url:string, data: Record<string, any>) => {
-  return _request(url, data, HttpMethodEnum.PUT);
+const put = (url:string, data: Record<string, any>, dataType?: HttpContentTypeEnum | undefined) => {
+  return _request(url, data, HttpMethodEnum.PUT, dataType);
 }
 
 /** _delete 请求删除, 无任何返回 */
-const _delete = (url:string, data: Record<string, any>) => {
-  return _request(url, data, HttpMethodEnum.DELETE);
+const _delete = (url:string, data: Record<string, any>, dataType?: HttpContentTypeEnum | undefined) => {
+  return _request(url, data, HttpMethodEnum.DELETE, dataType);
 }
 
 export {

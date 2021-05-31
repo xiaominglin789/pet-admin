@@ -28,3 +28,13 @@ volar插件提示报错 ts(2693):
   color: green;
 }
 ```
+
+
+
+
+- 关于封装 xmlhttprequest post参数传参是数据格式的问题
+  + 1.数据类型解析: content-type: application/json
+    使用 JSON.stringify record:k-v的数据结构转成 json字符串
+  + 2.数据类型解析: content-type: application/x-www-form-urlencode
+    需要讲数据拼接成: k=v&k1=v1 的字符串
+    可使用 qs 插件,ts项目中还需要安装开发依赖 @types/qs，并且保证它们2个的版本一致，否则会报错不能正常使用。

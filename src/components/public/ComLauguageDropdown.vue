@@ -34,15 +34,4 @@ const onDropdownChange = (target:string) => {
   change(target);
 }
 
-const onSignOut = () => {
-  ElMessageBox.confirm(t("lauguage.isLoginOut"), "", {
-    center: true
-  }).then(res=> {
-    router.replace('/login');
-    ElMessage.success(t("lauguage.loginOutSeccuss"));
-  }).catch(err => {
-    console.log(err);
-  });
-}
-
 </script>

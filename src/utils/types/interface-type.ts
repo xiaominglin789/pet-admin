@@ -1,3 +1,5 @@
+import { HttpContentTypeEnum, HttpMethodEnum } from "../emuns/http-enum";
+
 /** 登录类型 */
 export interface SigninModelType {
   account: string
@@ -12,4 +14,12 @@ export interface SignupModelType extends SigninModelType {
 
 export interface GGType {
   count: number
+}
+
+/** ajax参数类型 */
+export interface AjaxType {
+  url: string
+  data: Record<string, any>
+  dataType: HttpContentTypeEnum
+  method?: HttpMethodEnum
 }
