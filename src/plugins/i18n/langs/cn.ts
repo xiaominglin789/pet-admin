@@ -1,5 +1,10 @@
-export default {
+import zhLocale from 'element-plus/lib/locale/lang/zh-cn'
+
+const cn = {
+  el: zhLocale.el,
   lauguage: {
+    chinese: '中文',
+    english: '英文',
     change: "切换语言",
     loginOut: "注销",
     isLoginOut: "是否退出?",
@@ -31,3 +36,5 @@ export default {
     max9: "最多上传数: 9...",
   }
 };
+
+export default cn;

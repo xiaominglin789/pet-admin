@@ -1,8 +1,5 @@
 <template>
   <!-- 头像上传 -->
-  <el-header>
-    <com-lauguage-dropdown></com-lauguage-dropdown>
-  </el-header>
   <el-upload
     class="avatar-uploader"
     name="avater"
@@ -31,21 +28,6 @@
   <!-- delete -->
   <el-button @click="getTestDelete">delete</el-button>
 
-  <!-- 测试分页 -->
-  <div class="block">
-    <span class="demonstration">测试分页</span>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      v-model:currentPage="currentPage1"
-      :page-size="100"
-      layout="total, prev, pager, next"
-      :total="1000">
-    </el-pagination>
-  </div>
-  <!-- 日历 -->
-  <el-calendar :range="[new Date(2019, 2, 4), new Date(2019, 2, 24)]">
-  </el-calendar>
 </template>
 
 <script setup lang="ts">
@@ -54,22 +36,11 @@ import { ElMessage } from "element-plus";
 import { useVueI18n } from "@/hooks/useVueI18n";
 import { getTest4, getTest3, getTestGet, getTestPost, getTestPut, getTestDelete } from "@/api/user";
 import { debounce } from "@/utils/util";
-import ComLauguageDropdown from "@/components/public/ComLauguageDropdown.vue";
 
 const imageUrl = ref("");
 const { t } = useVueI18n();
 const useAvatar = ref("");
 const uploadFile = ref<File>();
-
-// 测试分页
-const currentPage1 = ref(5)
-const handleSizeChange = (val:number) => {
-  console.log(`每页 ${val} 条`);
-}
-const handleCurrentChange = (val:number) => {
-  console.log(`当前页: ${val}`);
-}
-
 
 // 日历
 const data = ref(new Date());

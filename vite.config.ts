@@ -6,6 +6,7 @@ import styleImport from "vite-plugin-style-import";
 const servePort = Number(process.env.VUE_APP_SERVE_PORT) || 3001;
 // https://vitejs.dev/config/
 export default defineConfig({
+  mode: "production",
   base: "./",
   resolve: {
     alias: {
@@ -16,6 +17,7 @@ export default defineConfig({
       "@hooks": path.resolve(__dirname, "src/hooks"),
       "@utils": path.resolve(__dirname, "src/utils"),
       "@views": path.resolve(__dirname, "src/views"),
+      "@plugins": path.resolve(__dirname, "src/plugins"),
       "@api": path.resolve(__dirname, "src/api"),
     }
   },

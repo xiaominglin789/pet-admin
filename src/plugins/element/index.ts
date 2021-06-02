@@ -1,5 +1,6 @@
 import "element-plus/packages/theme-chalk/src/base.scss";
-import ElementLocale from 'element-plus/lib/locale';
+import i18n from "../i18n";
+import ElementLocale from "element-plus/lib/locale";
 import {
   ElContainer,
   ElHeader,
@@ -17,7 +18,12 @@ import {
   ElUpload,
   ElPagination,
   ElCalendar,
+  ElDatePicker
 } from "element-plus";
+
+// 关于ui库部分组件有使用day.js,完全国际化还需要对day.js进行处理
+// ui组件内部支持i18n的国际化
+ElementLocale.i18n(i18n.global.t);
 
 const elComponents = [
   ElContainer,
@@ -36,25 +42,20 @@ const elComponents = [
   ElUpload,
   ElPagination,
   ElCalendar,
+  ElDatePicker
 ]
 
-const useElementComps = (app:any) => {
-
-  const init = (i18n?: any) => {
-    // 为了实现element插件的多语言切换
-    i18n && ElementLocale.i18n((k,v) => i18n.global.t(k, v));
-
-    // 按需引入
+export default {
+  install: function(Vue: any) {
+    // 按需引入组件
     elComponents.length > 0 && elComponents.forEach(el => {
-      app.component(el.name, el);
+      Vue.component(el.name, el);
     });
+    // el全局配置: 组件默认大小、层级
+    const option = {
+      size: "medium",
+      zIndex: 2000,
+    }
+    Vue.config.globalProperties.$ELEMENT = option
   }
-
-  return {
-    init
-  }
-}
-
-export {
-  useElementComps
 };

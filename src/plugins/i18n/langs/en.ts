@@ -1,6 +1,11 @@
-export default {
+import enLocale from 'element-plus/lib/locale/lang/en'
+
+const en = {
+  el: enLocale.el,
   lauguage: {
-    change: "change laug",
+    chinese: 'Chinese',
+    english: 'English',
+    change: "change lang",
     loginOut: "sign out",
     isLoginOut: "Are you sure login out ? ",
     loginOutSeccuss: "sign out seccuss",
@@ -31,3 +36,5 @@ export default {
     max9: "max upload count: 9...",
   }
 };
+
+export default en;

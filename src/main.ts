@@ -2,14 +2,13 @@ import { createApp } from 'vue'
 import App from '@/App.vue'
 import "@/permission";
 import router from "@/router";
-import { useElementComps } from "@/hooks/useInitElementComps";
-import VueI18n from "@/i18n";
+import Element from "@/plugins/element";
+import VueI18n from "@/plugins/i18n";
 
 const app = createApp(App);
 
 // 注册element组件
-useElementComps(app).init(VueI18n);
-
+app.use(Element);
 // 语言国际化
 app.use(VueI18n);
 
