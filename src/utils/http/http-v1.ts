@@ -193,6 +193,9 @@ const _setCurrentData = (data: Record<string, any>, dataType: HttpContentTypeEnu
       const formData = new FormData();
       if (isArray(files)) {
         // 数组处理
+        files.forEach((el: any) => {
+          formData.append(uploadName, el);
+        });
       } else {
         // 非数组处理
         // console.log(uploadName);
