@@ -19,7 +19,8 @@ export interface GGType {
 /** ajax参数类型 */
 export interface AjaxType {
   url: string
-  data: Record<string, any>
+  data: Record<string, any>,
   dataType: HttpContentTypeEnum
-  method?: HttpMethodEnum
+  method?: HttpMethodEnum,
+  timeout?: number
 }

@@ -38,3 +38,9 @@ volar插件提示报错 ts(2693):
   + 2.数据类型解析: content-type: application/x-www-form-urlencode
     需要讲数据拼接成: k=v&k1=v1 的字符串
     可使用 qs 插件,ts项目中还需要安装开发依赖 @types/qs，并且保证它们2个的版本一致，否则会报错不能正常使用。
+
+
+
+
+- 关于使用原生input做上传功能, 主动设置`Content-type=multipart/form-data`。可是请求发出去时，浏览器 的请求头: `Content-type: multipart/form-data` 没有 `boundary=` 键值， 发送的参数缺失，导致服务器upload接口 - 500
+

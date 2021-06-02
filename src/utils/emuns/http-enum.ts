@@ -9,7 +9,7 @@ export enum HttpMethodEnum {
 /** body参数格式 */
 export enum HttpContentTypeEnum {
   /** json */
-  JSON = 'application/json;charset=utf-8',
+  JSON = 'application/json; charset=utf-8',
   /** 表单 */
   FORM = 'application/x-www-form-urlencoded',
   /** 上传 */

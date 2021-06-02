@@ -21,5 +21,11 @@ export default {
     signUpSuccess: "register success...",
     signInError: "sorry login fail...",
     signUpError: "sorry register fail...",
+  },
+  upload: {
+    success: "upload success",
+    fail: "upload fail",
+    timeout: "upload timeout",
+    max9: "max upload count: 9...",
   }
 };

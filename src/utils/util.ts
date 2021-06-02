@@ -34,7 +34,7 @@ const debounce = (fn: Function, delay: number=300, immediatory: boolean=false) =
     if (timer) {
       clearTimeout(timer);
     }
-    console.log("参数 immediatory => ", immediatory);
+
     if (immediatory) {
       const immedia = !timer;
       timer = setTimeout(() => {

@@ -1,6 +1,6 @@
 <template>
   <el-container class="page home">
-    <el-header class="home-header" >
+    <el-header class="home-header">
       <!-- 语言切换 -->
       <com-lauguage-drapdown>
         <template #others>
@@ -8,7 +8,6 @@
         </template>
       </com-lauguage-drapdown>
     </el-header>
-    
   </el-container>
 </template>
 
@@ -24,7 +23,7 @@ const { t } = useVueI18n();
 const onSignOut = () => {
   ElMessageBox.confirm(t("lauguage.isLoginOut"), "", {
     center: true
-  }).then(res=> {
+  }).then(res => {
     router.replace('/login');
     ElMessage.success(t("lauguage.loginOutSeccuss"));
   }).catch(err => {
@@ -42,7 +41,7 @@ const onSignOut = () => {
   box-shadow: 0 1px 2px 1px #eee;
   .el-dropdown-link {
     cursor: pointer;
-    color: #409EFF;
+    color: #409eff;
   }
   .el-icon-arrow-down {
     font-size: 12px;
@@ -56,5 +55,4 @@ const onSignOut = () => {
     width: 100% !important;
   }
 }
-
 </style>

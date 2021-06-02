@@ -21,5 +21,11 @@ export default {
     signUpSuccess: "注册成功...",
     signInError: "登录失败",
     signUpError: "注册失败",
+  },
+  upload: {
+    success: "上传成功",
+    fail: "上传失败",
+    timeout: "上传超时",
+    max9: "最多上传数: 9...",
   }
 };
