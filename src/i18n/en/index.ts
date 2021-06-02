@@ -3,7 +3,9 @@ export default {
     change: "change laug",
     loginOut: "sign out",
     isLoginOut: "Are you sure login out ? ",
-    loginOutSeccuss: "sign out seccuss"
+    loginOutSeccuss: "sign out seccuss",
+    changeSuccess: "change lauguage seccusse",
+    changeError: "change lauguage error",
   },
   signInAndUp: {
     account: "account",

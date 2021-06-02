@@ -4,6 +4,8 @@ export default {
     loginOut: "注销",
     isLoginOut: "是否退出?",
     loginOutSeccuss: "注销成功",
+    changeSuccess: "切换成功",
+    changeFail: "切换失败",
   },
   signInAndUp: {
     account: "账号",

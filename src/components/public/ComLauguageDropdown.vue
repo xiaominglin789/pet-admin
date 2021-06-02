@@ -32,6 +32,7 @@ const  { langData, change, t } = useVueI18n();
 
 const onDropdownChange = (target:string) => {
   change(target);
+  ElMessage.success(t("lauguage.changeSuccess"));
 }
 
 </script>

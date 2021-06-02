@@ -7,6 +7,7 @@ const useVueI18n = () => {
   const { locale, t } = useI18n({ useScope: 'global' });
 
   const change = (lang: string) => {
+    console.log("切换成: ", lang);
     locale.value = lang;
     currLang.value = lang;
     // 保持至缓存
@@ -16,7 +17,7 @@ const useVueI18n = () => {
     t,
     change,
     langData: [
-      { title: "中文", value: "cn" },
+      { title: "中文", value: "zh-cn" },
       { title: "Eglish", value: "en" },
     ]
   }

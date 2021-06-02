@@ -8,7 +8,7 @@ import VueI18n from "@/i18n";
 const app = createApp(App);
 
 // 注册element组件
-useElementComps(app).init();
+useElementComps(app).init(VueI18n);
 
 // 语言国际化
 app.use(VueI18n);
